@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+<Base title="Privacy Notice | PropertyRama" description="How PropertyRama Ltd uses the personal details you share when you ask for a quote.">
+  <div class="wrap pt-12 pb-16 lg:pt-20">
+    <h1 class="text-hero">Privacy notice</h1>
+    <div class="prose-block mt-8">
+      <p>{site.legalName} is responsible for the personal details you share with us through this website, by phone or by email.</p>
+      <h2>What we collect</h2>
+      <p>When you ask for a quote, we collect your name, phone number, job postcode, the details of your job and, if you provide it, your email address.</p>
+      <h2>Why we use it</h2>
+      <p>We use your details to respond to your enquiry, prepare a quote and carry out any work you ask us to do. We rely on the steps needed before entering a contract with you and on our legitimate interest in replying to enquiries.</p>
+      <h2>How long we keep it</h2>
+      <p>We keep your details only as long as we need them for your enquiry, any resulting work and our legal and accounting obligations.</p>
+      <h2>Cookies</h2>
+      <p>This website does not use advertising or analytics cookies.</p>
+      <h2>Your rights</h2>
+      <p>You can ask to see, correct or delete your personal data, or object to how we use it. Email <a href={`mailto:${site.email}`}>{site.email}</a>. You can also complain to the <a href="https://ico.org.uk/make-a-complaint/" rel="noopener">Information Commissioner's Office</a>.</p>
+    </div>
+  </div>
+</Base>

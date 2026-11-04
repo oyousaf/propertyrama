@@ -1,0 +1,5 @@
+---
+import { site } from '../data/site';
+const { lines } = site.address;
+---
+<span>{lines.map((line, i) => <Fragment>{line}{i < lines.length - 1 && <>,<br /></>}</Fragment>)}</span>

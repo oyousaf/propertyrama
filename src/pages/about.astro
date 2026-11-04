@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import Address from '../components/Address.astro';
+import { site } from '../data/site';
+const values = [
+  { title: 'Professional', text: 'Our engineers are experienced and qualified, with a passion for quality.' },
+  { title: 'Quality', text: 'We work to a high standard, whatever the size of the job.' },
+  { title: 'Honest', text: 'We advise on the best way to meet your requirements, at a competitive rate.' },
+];
+---
+<Base title="About | PropertyRama, Milton Keynes" description="PropertyRama Ltd is an independent property maintenance company based in Milton Keynes, offering professional, quality and honest services.">
+  <div class="wrap grid gap-10 pt-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16 lg:pt-20">
+    <div>
+      <h1 class="max-w-[14ch] text-hero">Experienced professionals with a passion for quality</h1>
+      <p class="mt-6 max-w-[60ch] text-lg">PropertyRama Ltd is an independent property maintenance company based in Milton Keynes, providing professional, quality and honest services across all aspects of residential building repairs and maintenance.</p>
+      <p class="mt-4 max-w-[60ch] text-muted">That includes handyman jobs, plumbing, gas and electrical maintenance and repairs, through to fit-outs, painting and decorating, cleaning and gardening.</p>
+    </div>
+    <address class="self-start border-t-4 border-signal bg-surface p-6 not-italic">
+      <h2 class="text-2xl">Find us</h2>
+      <p class="mt-3"><Address /></p>
+      <p class="mt-3"><a href={site.phoneHref} class="inline-flex min-h-11 items-center font-bold text-link underline">{site.phone}</a><br /><a href={`mailto:${site.email}`} class="inline-flex min-h-11 items-center font-bold break-all text-link underline">{site.email}</a></p>
+    </address>
+  </div>
+  <section class="wrap mt-16" aria-labelledby="values-heading">
+    <h2 id="values-heading" class="text-section">How we work</h2>
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+      {values.map((v) => (
+        <div class="border-t border-line pt-5">
+          <h3 class="text-2xl">{v.title}</h3>
+          <p class="mt-2 text-muted">{v.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+  <QuoteBand />
+</Base>

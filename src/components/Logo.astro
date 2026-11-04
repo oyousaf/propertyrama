@@ -1,0 +1,20 @@
+---
+interface Props {
+  tone?: 'default' | 'band';
+}
+const { tone = 'default' } = Astro.props;
+const dark = tone === 'band';
+---
+<a href="/" aria-label="PropertyRama home" class:list={['inline-flex items-end gap-2 no-underline', dark ? 'text-band-fg' : 'text-fg']}>
+  <span class="font-sans text-[1.28rem] leading-none tracking-tight" aria-hidden="true">PROPERTY<span class={dark ? 'text-signal' : 'text-link'}>RAMA</span></span>
+  <svg viewBox="0 0 230 110" width="88" height="42" aria-hidden="true" class="-ml-1 shrink-0">
+    <path d="M2 74 42 28 72 74Z" class="fill-current opacity-85" />
+    <path d="M42 28 108 38 84 98 72 74Z" class="fill-current opacity-45" />
+    <path d="M125 2 227 38 195 106H83Z" class="fill-current opacity-85" />
+    <g class={dark ? 'fill-band' : 'fill-surface'}>
+      <rect x="133" y="28" width="9" height="13" /><rect x="150" y="30" width="9" height="13" /><rect x="167" y="32" width="9" height="13" />
+      <rect x="127" y="52" width="9" height="13" /><rect x="144" y="53" width="9" height="13" /><rect x="176" y="56" width="9" height="13" />
+      <rect x="121" y="76" width="9" height="13" />
+    </g>
+  </svg>
+</a>

@@ -1,0 +1,11 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+const onQuote = Astro.url.pathname.startsWith('/quote');
+---
+<div class="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-surface px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden">
+  <div class:list={['grid gap-2', !onQuote && 'grid-cols-2']}>
+    <a href={site.phoneHref} class="btn btn-ghost text-fg"><Icon name="phone" size={20} />Call us</a>
+    {!onQuote && <a href="/quote" class="btn btn-signal">Free quote</a>}
+  </div>
+</div>

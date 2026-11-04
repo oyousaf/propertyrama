@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+interface Props {
+  heading?: string;
+}
+const { heading = 'Tell us about the job. The quote is free.' } = Astro.props;
+---
+<section data-band class="mt-20 bg-band text-band-fg">
+  <div class="wrap grid gap-6 py-14 md:grid-cols-[1fr_auto] md:items-center">
+    <div>
+      <h2 class="max-w-[20ch] text-section">{heading}</h2>
+      <p class="mt-3 text-band-muted">Prefer to talk it through? Call <a href={site.phoneHref} class="font-bold whitespace-nowrap text-band-fg underline">{site.phone}</a>.</p>
+    </div>
+    <a href="/quote" class="btn btn-signal justify-self-start">Get a free quote</a>
+  </div>
+</section>

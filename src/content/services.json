@@ -1,0 +1,10 @@
+[
+  { "id": "plumbing", "order": 1, "name": "Plumbing", "icon": "tap", "summary": "Plumbing maintenance and repairs for your home.", "jobs": ["Leaks and drips", "Taps and toilets", "Pipework repairs"] },
+  { "id": "gas", "order": 2, "name": "Gas", "icon": "flame", "summary": "Gas maintenance and repairs, with clear advice on the best way forward.", "jobs": ["Maintenance", "Repairs", "Fault finding"] },
+  { "id": "electrical", "order": 3, "name": "Electrical", "icon": "bolt", "summary": "Electrical maintenance and repairs around the house.", "jobs": ["Fault finding", "Sockets and switches", "Lighting repairs"] },
+  { "id": "handyman", "order": 4, "name": "Handyman jobs", "icon": "drill", "summary": "The smaller jobs on your list, done properly and without fuss.", "jobs": ["Odd jobs", "Fixing and fitting", "General repairs"] },
+  { "id": "fit-outs", "order": 5, "name": "Fit-outs", "icon": "ruler", "summary": "Fitting out a room or a whole property, with one team from start to finish.", "jobs": ["Room fit-outs", "Property refreshes", "Finishing work"] },
+  { "id": "decorating", "order": 6, "name": "Painting & decorating", "icon": "roller", "summary": "Painting and wallpapering that leaves your rooms looking fresh.", "jobs": ["Interior painting", "Wallpapering", "Touch-ups"] },
+  { "id": "cleaning", "order": 7, "name": "Cleaning", "icon": "spray", "summary": "Cleaning services to keep your property looking its best.", "jobs": ["Regular cleans", "One-off cleans", "After-work cleans"] },
+  { "id": "gardening", "order": 8, "name": "Gardening", "icon": "leaf", "summary": "Keeping outdoor spaces tidy and well looked after.", "jobs": ["Tidy-ups", "Hedges and borders", "Regular upkeep"] }
+]

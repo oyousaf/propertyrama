@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Address from '../components/Address.astro';
+import { site } from '../data/site';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Get a Free Quote | PropertyRama, Milton Keynes" description="Tell PropertyRama about your property repair or maintenance job and get a free quote. Call 07511 144129 or use the form.">
+  <div class="wrap grid gap-10 pt-12 lg:grid-cols-[1fr_1.5fr] lg:gap-16 lg:py-20">
+    <div>
+      <h1 class="text-hero">Get a free quote</h1>
+      <p class="mt-5 max-w-[42ch] text-lg text-muted">A few details about the job are all we need to get started.</p>
+      <ul class="mt-7 grid gap-1">
+        <li><a href={site.phoneHref} class="flex min-h-11 items-center gap-3 font-bold text-fg no-underline hover:underline"><Icon name="phone" size={22} />{site.phone}</a></li>
+        <li><a href={`mailto:${site.email}`} class="flex min-h-11 items-center gap-3 font-bold break-all text-fg no-underline hover:underline"><Icon name="mail" size={22} />{site.email}</a></li>
+        <li class="flex gap-3 py-2 text-muted"><Icon name="pin" size={22} class="mt-0.5" /><Address /></li>
+      </ul>
+    </div>
+
+    <div class="mb-16 self-start border-t-4 border-signal bg-surface p-5 sm:p-8 lg:mb-0">
+      <noscript><p class="mb-5 font-semibold">To request a quote without JavaScript, call {site.phone} or email {site.email}.</p></noscript>
+      <form id="quote-form" class="grid gap-5" novalidate>
+        <p class="text-sm text-muted">All fields are required unless marked optional.</p>
+        <div>
+          <label class="field-label" for="service">What do you need?</label>
+          <select class="field" id="service" name="service" required data-error="Choose the type of work, or Something else.">
+            <option value="">Choose a service</option>
+            {services.map((s) => <option value={s.id}>{s.data.name}</option>)}
+            <option value="other">Something else</option>
+          </select>
+          <p class="field-error" id="service-error" hidden></p>
+        </div>
+        <div>
+          <label class="field-label" for="details">Tell us about the job</label>
+          <textarea class="field min-h-36" id="details" name="details" required data-error="Tell us briefly what needs doing."></textarea>
+          <p class="field-error" id="details-error" hidden></p>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class="field-label" for="name">Your name</label>
+            <input class="field" id="name" name="name" type="text" autocomplete="name" required data-error="Enter your name." />
+            <p class="field-error" id="name-error" hidden></p>
+          </div>
+          <div>
+            <label class="field-label" for="postcode">Job postcode</label>
+            <input class="field" id="postcode" name="postcode" type="text" autocomplete="postal-code" required pattern="[A-Za-z]{1,2}[0-9][A-Za-z0-9]?\s*[0-9][A-Za-z]{2}" data-error="Enter a full UK postcode, like MK8 8DD." />
+            <p class="field-error" id="postcode-error" hidden></p>
+          </div>
+          <div>
+            <label class="field-label" for="phone">Phone</label>
+            <input class="field" id="phone" name="phone" type="tel" autocomplete="tel" required pattern="[+0-9() \-]{10,}" data-error="Enter a phone number, like 07700 900123." />
+            <p class="field-error" id="phone-error" hidden></p>
+          </div>
+          <div>
+            <label class="field-label" for="email">Email <span class="font-normal text-muted">(optional)</span></label>
+            <input class="field" id="email" name="email" type="email" autocomplete="email" data-error="Enter an email address, like name@example.com." />
+            <p class="field-error" id="email-error" hidden></p>
+          </div>
+        </div>
+        <div hidden>
+          <label for="company">Leave this blank</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <button type="submit" class="btn btn-signal cursor-pointer justify-self-start">Request my free quote</button>
+        <p class="text-sm text-muted">We use these details only to respond to your enquiry. See our <a href="/privacy" class="text-link underline">privacy notice</a>.</p>
+      </form>
+      <div id="quote-done" tabindex="-1" hidden class="grid gap-3 outline-hidden">
+        <h2 class="text-3xl">Thanks<span id="quote-name"></span>.</h2>
+        <p>That's everything we need to look at your job.</p>
+        <p>Anything urgent? Call <a href={site.phoneHref} class="font-bold text-link underline">{site.phone}</a>.</p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Preview behaviour: validates in the browser and sends nothing anywhere.
+  // A live build posts validated data to a server endpoint in the success branch below.
+  const form = document.querySelector<HTMLFormElement>('#quote-form');
+  const done = document.querySelector<HTMLElement>('#quote-done');
+  const nameOut = document.querySelector<HTMLElement>('#quote-name');
+
+  type Control = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+
+  const preselect = new URLSearchParams(location.search).get('service');
+  const select = form?.querySelector<HTMLSelectElement>('#service');
+  if (select && preselect && [...select.options].some((o) => o.value === preselect)) select.value = preselect;
+
+  const show = (el: Control, message: string) => {
+    const box = document.getElementById(`${el.id}-error`);
+    if (!box) return;
+    box.textContent = message;
+    box.hidden = !message;
+    if (message) {
+      el.setAttribute('aria-invalid', 'true');
+      el.setAttribute('aria-describedby', box.id);
+    } else {
+      el.removeAttribute('aria-invalid');
+      el.removeAttribute('aria-describedby');
+    }
+  };
+
+  const check = (el: Control) => {
+    const blank = !el.value.trim();
+    const bad = el.required ? blank || !el.validity.valid : !blank && !el.validity.valid;
+    show(el, bad ? (el.dataset.error ?? 'Check this field.') : '');
+    return !bad;
+  };
+
+  const controls = form ? [...form.querySelectorAll<Control>('[data-error]')] : [];
+
+  controls.forEach((el) => {
+    el.addEventListener('input', () => {
+      if (el.getAttribute('aria-invalid')) check(el);
+    });
+  });
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const invalid = controls.filter((el) => !check(el));
+    if (invalid.length) {
+      invalid[0].focus();
+      return;
+    }
+    const first = form.querySelector<HTMLInputElement>('#name')?.value.trim().split(/\s+/)[0];
+    if (nameOut && first) nameOut.textContent = `, ${first}`;
+    form.hidden = true;
+    if (done) {
+      done.hidden = false;
+      done.focus();
+    }
+  });
+</script>

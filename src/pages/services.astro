@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Services | PropertyRama, Milton Keynes" description="Plumbing, gas, electrical, handyman jobs, fit-outs, painting and decorating, cleaning and gardening for homes in Milton Keynes.">
+  <div class="wrap pt-12 lg:pt-20">
+    <h1 class="max-w-[16ch] text-hero">Our services</h1>
+    <p class="mt-5 max-w-[56ch] text-lg text-muted">Professional, quality and honest services covering all aspects of residential repairs and maintenance. Tell us what you need and we'll advise on the best way to do it.</p>
+    <nav aria-label="Jump to a service" class="mt-8 flex flex-wrap gap-2">
+      {services.map((s) => <a href={`#${s.id}`} class="flex min-h-11 items-center rounded-xs border border-field bg-surface px-3 font-semibold text-fg no-underline hover:border-fg">{s.data.name}</a>)}
+    </nav>
+  </div>
+  <div class="wrap mt-12">
+    {services.map((s) => (
+      <section id={s.id} class="grid scroll-mt-4 gap-5 border-t border-line py-9 md:grid-cols-[3.5rem_1.2fr_1fr_auto] md:items-start md:gap-8" aria-labelledby={`${s.id}-h`}>
+        <span class="text-link"><Icon name={s.data.icon} size={40} /></span>
+        <div>
+          <h2 id={`${s.id}-h`} class="text-3xl">{s.data.name}</h2>
+          <p class="mt-2 text-muted">{s.data.summary}</p>
+        </div>
+        <ul class="grid gap-1">
+          {s.data.jobs.map((j) => <li class="flex gap-2"><span class="text-link" aria-hidden="true">/</span>{j}</li>)}
+        </ul>
+        <a href={`/quote?service=${s.id}`} aria-label={`Get a quote for ${s.data.name}`} class="inline-flex min-h-11 items-center gap-2 font-bold whitespace-nowrap text-link underline">Get a quote <Icon name="arrow" size={18} /></a>
+      </section>
+    ))}
+  </div>
+  <QuoteBand heading="Not sure which one you need? Just ask." />
+</Base>

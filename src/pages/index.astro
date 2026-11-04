@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import House from '../components/House.astro';
+import Icon from '../components/Icon.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import { site } from '../data/site';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const reviews = await getCollection('reviews');
+const steps = [
+  { title: 'Tell us about the job', text: 'Call, email or fill in the quote form with what needs doing and where.' },
+  { title: 'Get your free quote', text: 'We talk you through the best way to do the work, at a competitive rate.' },
+  { title: 'We get it done', text: 'Our engineers carry out the work and keep you informed at every step.' },
+];
+---
+<Base title="Property Repairs & Maintenance in Milton Keynes | PropertyRama" description="Plumbing, gas, electrical, handyman, fit-outs, decorating, cleaning and gardening from one independent Milton Keynes company. Get a free quote from PropertyRama.">
+  <section data-band class="roof-cut bg-band text-band-fg [--cut:4.5rem]">
+    <div class="wrap grid items-center gap-8 pt-10 pb-24 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:pt-16 lg:pb-32">
+      <div class="grid justify-items-start gap-6">
+        <p class="text-sm font-semibold tracking-widest text-band-muted uppercase">Milton Keynes property maintenance</p>
+        <h1 class="text-hero">All your property repair &amp; maintenance jobs under one roof</h1>
+        <p class="max-w-[46ch] text-lg text-band-muted">One independent company for the plumbing, the wiring, the decorating and the garden, so you only need to make one call.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/quote" class="btn btn-signal">Get a free quote</a>
+          <a href={site.phoneHref} class="btn btn-ghost"><Icon name="phone" size={20} />{site.phone}</a>
+        </div>
+      </div>
+      <House />
+    </div>
+  </section>
+
+  <section class="wrap mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[1fr_2fr] lg:gap-14" aria-labelledby="services-heading">
+    <div class="lg:sticky lg:top-8 lg:self-start">
+      <h2 id="services-heading" class="text-section">Eight trades. One number to call.</h2>
+      <p class="mt-4 max-w-[40ch] text-muted">From a dripping tap to a full fit-out, covering all aspects of residential repairs and maintenance.</p>
+      <a href="/services" class="mt-5 inline-flex min-h-11 items-center gap-2 font-bold text-link underline">See all services <Icon name="arrow" size={18} /></a>
+    </div>
+    <ul class="grid border-t border-line sm:grid-cols-2 sm:gap-x-10">
+      {services.map((s) => (
+        <li class="border-b border-line">
+          <a href={`/services#${s.id}`} class="group grid grid-cols-[auto_1fr] gap-x-4 py-5 text-fg no-underline">
+            <span class="text-link transition-transform duration-200 group-hover:-translate-y-0.5"><Icon name={s.data.icon} size={30} /></span>
+            <span>
+              <span class="block font-display text-xl font-bold group-hover:underline">{s.data.name}</span>
+              <span class="mt-1 block text-muted">{s.data.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="process-heading">
+    <h2 id="process-heading" class="text-section">Clear from the first call</h2>
+    <ol class="mt-8 grid gap-8 md:grid-cols-3">
+      {steps.map((step, i) => (
+        <li class="grid content-start gap-2">
+          <span class="font-display text-5xl font-bold text-link" aria-hidden="true">{i + 1}</span>
+          <h3 class="text-2xl">{step.title}</h3>
+          <p class="text-muted">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="reviews-heading">
+    <h2 id="reviews-heading" class="text-section">What our clients say</h2>
+    <div class="mt-8 grid gap-10 md:grid-cols-2">
+      {reviews.map((r) => <ReviewCard {...r.data} />)}
+    </div>
+  </section>
+
+  <QuoteBand />
+</Base>

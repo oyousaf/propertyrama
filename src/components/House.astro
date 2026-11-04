@@ -1,0 +1,67 @@
+---
+// Original cutaway: every trade in the same building, drawn as a blueprint on the dark band.
+const line = '#C3CDD6';
+const signal = '#F0963A';
+---
+<svg viewBox="0 0 640 500" class="block h-auto w-full" aria-hidden="true" fill="none" stroke={line} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- chimney, roof, shell -->
+  <path d="M432 78h36v72h-36z" fill="#1E2C39" />
+  <path d="M424 78h52" stroke-width="4" />
+  <path d="M40 196 258 48 572 196Z" fill="#263644" />
+  <path d="M40 196 258 48" stroke={signal} stroke-width="6" />
+  <path d="M70 196h470v264H70z" fill="#1E2C39" />
+  <!-- loft window, from the logo's lit windows -->
+  <g fill={signal} stroke="none" class="house-glow">
+    <path d="M238 112h15v20h-15zM262 112h15v20h-15zM238 142h15v20h-15zM262 142h15v20h-15z" />
+  </g>
+  <!-- floors and walls -->
+  <path d="M70 328h470M236 196v132M396 196v132M272 328v132M422 328v132" />
+
+  <!-- bathroom: bath, shower -->
+  <path d="M90 284h126v12a20 20 0 0 1-20 20h-86a20 20 0 0 1-20-20z" />
+  <path d="M106 316v8M200 316v8M114 284v-58h24v12" />
+  <path d="M130 238h16" />
+  <path d="M132 248v8M138 254v8M144 248v8" stroke-width="2" />
+
+  <!-- bedroom: wall half painted, roller, tray -->
+  <path d="M238 198h82v128h-82z" fill={signal} fill-opacity="0.18" stroke="none" />
+  <path d="M320 198v128" stroke-dasharray="5 7" />
+  <path d="M306 226h44v15h-44zM350 233h12v22h-34v18" />
+  <path d="M328 273v20" stroke-width="4" />
+  <path d="M344 316h40l-6-13h-34z" />
+
+  <!-- electrics: pendant, socket, cable -->
+  <path d="M446 250l13-22h16l13 22z" />
+  <path d="M506 286h20v20h-20z" />
+  <path d="M513 293v6M519 293v6" stroke-width="2" />
+  <g stroke={signal} stroke-width="2" class="house-glow">
+    <path d="M467 260v10M446 256l-8 8M488 256l8 8" />
+  </g>
+  <path class="house-run house-run-late" pathLength="1" d="M516 286V212h-49v16" stroke={signal} stroke-width="3" />
+
+  <!-- kitchen: boiler with flame, sink, units -->
+  <path d="M90 348h46v62H90z" />
+  <path d="M113 366c5 6 9 10 9 16a9 9 0 0 1-18 0c0-3 1-5 3-7 1 2 2 3 3 3-1-4 1-8 3-12Z" fill={signal} stroke={signal} stroke-width="1" class="house-glow" />
+  <path d="M156 412h100M156 412v48M206 412v48M256 412v48" />
+  <path d="M196 412v-22a8 8 0 0 1 16 0" />
+  <path class="house-run" pathLength="1" d="M113 348v-14h40v-22h-4" stroke={signal} stroke-width="3" />
+  <path class="house-run" pathLength="1" d="M136 400h34v-6" stroke={signal} stroke-width="3" />
+
+  <!-- fit-out: shelves, toolbox -->
+  <path d="M292 366h106M292 396h106" />
+  <path d="M306 366v-16h12v16M326 366v-22h9v22M352 396v-18h22v18" />
+  <path d="M298 430h66v30h-66zM318 430v-9h26v9M298 442h66" />
+
+  <!-- hall: door, mop and bucket -->
+  <path d="M478 366h46v94h-46z" />
+  <circle cx="486" cy="414" r="2.5" fill={line} />
+  <path d="M452 372v62M440 460l5-26h16l5 26zM444 372h16" />
+
+  <!-- garden -->
+  <path d="M0 460h640" stroke-width="4" />
+  <path d="M594 460v-46" />
+  <circle cx="594" cy="388" r="30" fill="#1E2C39" />
+  <path d="M594 414v-34M594 400l-11-9M594 390l10-8" stroke-width="2" />
+  <path d="M552 460v-10M562 460v-7M572 460v-11M616 460v-8M628 460v-11M14 460v-9M26 460v-6M38 460v-11M50 460v-7" stroke-width="2" />
+  <path d="M20 478h130M240 478h200M500 478h120" stroke-opacity="0.35" stroke-width="2" />
+</svg>

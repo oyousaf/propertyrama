@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+const reviews = await getCollection('reviews');
+---
+<Base title="Reviews | PropertyRama, Milton Keynes" description="What clients say about PropertyRama's property repair and maintenance work in Milton Keynes.">
+  <div class="wrap pt-12 lg:pt-20">
+    <h1 class="max-w-[16ch] text-hero">What our clients say</h1>
+    <div class="mt-12 grid gap-12 md:grid-cols-2">
+      {reviews.map((r) => <ReviewCard {...r.data} level="h2" />)}
+    </div>
+  </div>
+  <QuoteBand heading="Your job could be next." />
+</Base>

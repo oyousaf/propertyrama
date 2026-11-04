@@ -1,0 +1,218 @@
+@import 'tailwindcss';
+
+/* Slate and Signal. Pairs are contrast-checked in both schemes. */
+@theme {
+  --color-bg: light-dark(#f2f4f6, #10171e);
+  --color-surface: light-dark(#ffffff, #1c2630);
+  --color-fg: light-dark(#15202b, #eef1f4);
+  --color-muted: light-dark(#45525f, #aeb9c4);
+  --color-line: light-dark(#cfd6dc, #33414e);
+  --color-field: light-dark(#6b7782, #8592a0);
+  --color-link: light-dark(#a1450a, #f0963a);
+  --color-signal: light-dark(#e5841d, #f0963a);
+  --color-on-signal: light-dark(#15202b, #10171e);
+  --color-error: light-dark(#b3261e, #ff9d94);
+  --color-success: light-dark(#1b6b48, #6fd3a3);
+  --color-focus: light-dark(#15202b, #f0963a);
+  --color-band: light-dark(#15202b, #1c2630);
+  --color-band-fg: light-dark(#ffffff, #eef1f4);
+  --color-band-muted: light-dark(#c3cdd6, #aeb9c4);
+
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-atkinson);
+
+  --text-hero: clamp(2.5rem, 1.6rem + 4.2vw, 4.75rem);
+  --text-section: clamp(1.9rem, 1.5rem + 2vw, 3rem);
+  --ease-settle: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-heartbeat: heartbeat 1.6s ease-in-out infinite;
+  @keyframes heartbeat {
+    0%,
+    40%,
+    100% {
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(1.25);
+    }
+    28% {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+}
+
+/* The angled cut that echoes the roof pitch in the logo. */
+@utility roof-cut {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut, 3.5rem)), 0 100%);
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    scroll-padding-bottom: 5rem;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    text-underline-offset: 0.18em;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  [data-band] {
+    --color-focus: #f0963a;
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition {
+      navigation: none;
+    }
+
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.625rem 1.375rem;
+    border-radius: 3px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 160ms var(--ease-settle);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-signal {
+    background: var(--color-signal);
+    color: var(--color-on-signal);
+  }
+
+  .btn-ghost {
+    border: 2px solid currentColor;
+  }
+
+  .field-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .field {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--color-field);
+    border-radius: 3px;
+    background: var(--color-surface);
+    color: var(--color-fg);
+  }
+
+  .field[aria-invalid='true'] {
+    border: 2px solid var(--color-error);
+  }
+
+  .field-error {
+    color: var(--color-error);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+
+  .prose-block h2 {
+    font-size: 1.5rem;
+    margin-top: 2.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose-block p {
+    max-width: 65ch;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-block a {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+}
+
+/* House cutaway: pipe and cable draw in once on load; the finished drawing is the resting state. */
+@media (prefers-reduced-motion: no-preference) {
+  .house-run {
+    stroke-dasharray: 1;
+    animation: run 1.6s var(--ease-settle) 0.25s backwards;
+  }
+
+  .house-run-late {
+    animation-delay: 0.7s;
+  }
+
+  .house-glow {
+    animation: glow 0.6s ease-out 1.9s backwards;
+  }
+}
+
+@keyframes run {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes glow {
+  from {
+    opacity: 0;
+  }
+}
